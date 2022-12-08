@@ -1,7 +1,6 @@
-type Character = {
+export type Character = {
     name: string;
-    // initiative: string;
+    initiative: string;
     id: number;
+    flag: string;
 }
-
-export default Character;

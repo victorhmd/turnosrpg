@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Add, Person, Close, SmartToy } from '@mui/icons-material/';
 
-import Character from '../../types/Character';
+import {Character} from '../../types/Character';
 
 
 type Props = {
@@ -34,9 +33,14 @@ export default class CharList extends React.Component<Props, State> {
 
   //#region Functions
   btnAdd_click = () => {
-    const lastId = this.state.lsCharacter[this.state.lsCharacter.length + 1];
+    let flag = this.props.render === 1 ? 'j' : 'npc';
     this.setState(state => ({ 
-      lsCharacter: [...state.lsCharacter, { name: state.name, id: state.lsCharacter.length + 1 }] }));
+      lsCharacter: [...state.lsCharacter, 
+        { 
+          name: state.name, 
+          id: state.lsCharacter.length + 1, 
+          initiative: '',
+          flag: flag }] }));
     this.clearFields();
   }
 
@@ -60,6 +64,12 @@ export default class CharList extends React.Component<Props, State> {
   clearFields = () => {
     this.setState({name: ''})
   }
+
+  setInitiative = (init: string, index: number) => {
+    this.state.lsCharacter[index].initiative = init;
+    this.forceUpdate();
+  }
+
   //#endregion
   
 
@@ -70,8 +80,8 @@ export default class CharList extends React.Component<Props, State> {
           <label>{this.state.title}</label>
           <hr></hr>
           <div>
-            {this.state.lsCharacter.map((char) => (
-              <div>
+            {this.state.lsCharacter.map((char,index) => (
+              <div key={index}>
                 <div className="row align-items-center mb-3">
                   <div className="col-2 p-3">
                     {this.state.icon}
@@ -82,7 +92,8 @@ export default class CharList extends React.Component<Props, State> {
                     </span>
                   </div>
                   <div className="col-3 p-3">
-                    <TextField id="tfInit" variant="outlined" inputProps={{ maxLength: 2 }} />
+                    <TextField id="tfInit" variant="outlined" inputProps={{ maxLength: 2 }} 
+                    onChange={e => this.setInitiative(e.target.value, index)}/>
                   </div>
                   <div className="col-2 p-2">
                     <Button variant="outlined" color="error" onClick={() => this.btnDel_click(char.id)}>

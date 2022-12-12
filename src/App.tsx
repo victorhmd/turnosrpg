@@ -1,64 +1,92 @@
-import React from 'react';
+import * as React from 'react';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { Person, SmartToy, List, PlayArrow } from '@mui/icons-material/';
+import { Container } from '@mui/material';
 import CharList from './components/charList/CharList';
-import TurnList from './components/TurnList';
-import Button from '@mui/material/Button';
-import { Turn } from './types/Turn';
-import { Refresh } from '@mui/icons-material/';
 
-type Props = {
-
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
 }
 
-type State = {
-  turn: Turn;
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {<Box sx={{ p: 3 }}>
+        {children}
+      </Box>
+      }
+    </div>
+  );
 }
 
-export default class App extends React.Component<Props, State> {
-  private charListCompPlayer: React.RefObject<CharList>;
-  private charListCompNPC: React.RefObject<CharList>;
-  private turnListComp: React.RefObject<TurnList>;
-  private turn: Turn;
-
-
-  constructor(props: any) {
-    super(props);
-    this.charListCompPlayer = React.createRef();
-    this.charListCompNPC = React.createRef();
-    this.turnListComp = React.createRef();
-    this.turn = { playerList: [], npcList: [] };
-  }
-
-  setTurn() {
-    this.turn = {
-      playerList: this.charListCompPlayer.current?.state.lsCharacter,
-      npcList: this.charListCompNPC.current?.state.lsCharacter
-    };
-
-    this.turnListComp.current?.setState({
-      turn: this.turn
-    });
-  }
-
-  render() {
-    return (
-      <div className='container p-5'>
-        <div className="row">
-          <div className="col-4">
-            <CharList render={1} ref={this.charListCompPlayer}></CharList>
-          </div>
-          <div className="col-4">
-            <div className="fluid text-center">
-              <Button variant="contained" color="success" onClick={() => this.setTurn()} className="mb-3" endIcon={<Refresh />}>
-                Atualizar
-              </Button>
-            </div>
-            <TurnList ref={this.turnListComp}></TurnList>
-          </div>
-          <div className="col-4">
-            <CharList render={2} ref={this.charListCompNPC}></CharList>
-          </div>
-        </div>
-      </div>
-    )
-  }
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
 }
+
+export default function App() {
+  const [valueTabPLayerList, setValueTabPlayerList] = React.useState(0);
+
+  const handleChangeTabPlayerList = (event: React.SyntheticEvent, newValue: number) => {
+    setValueTabPlayerList(newValue);
+  };
+
+  const [valueTabNpcList, setValueTabNpcList] = React.useState(0);
+
+  const handleChangeTabNpcList = (event: React.SyntheticEvent, newValue: number) => {
+    setValueTabNpcList(newValue);
+  };
+
+  return (
+    <div>
+      <Container sx={{ display: { xs: 'none', lg: 'flex' } }}>
+        <Box sx={{ width: '50vw', height: '80vh', border: 1, borderColor: 'divider', m: 3, mt: 8 }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={valueTabPLayerList} onChange={handleChangeTabPlayerList} aria-label="basic tabs example">
+              <Tab icon={<Person />} iconPosition="start" label="Jogadores" {...a11yProps(0)} />
+              <Tab icon={<SmartToy />} iconPosition="start" label="NPCs" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={valueTabPLayerList} index={0}>
+            <CharList render={1}></CharList>
+          </TabPanel>
+          <TabPanel value={valueTabPLayerList} index={1}>
+            <CharList render={2}></CharList>
+          </TabPanel>
+        </Box>
+
+        <Box sx={{ width: '50vw', height: '80vh', border: 1, borderColor: 'divider', m: 3, mt: 8 }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={valueTabNpcList} onChange={handleChangeTabNpcList} aria-label="basic tabs example">
+              <Tab icon={<List />} iconPosition="start" label="Lista" {...a11yProps(0)} />
+              <Tab icon={<PlayArrow />} iconPosition="start" label="Combate" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={valueTabNpcList} index={0}>
+
+          </TabPanel>
+          <TabPanel value={valueTabNpcList} index={1}>
+
+          </TabPanel>
+        </Box>
+      </Container>
+    </div>
+
+  );
+}
+
+

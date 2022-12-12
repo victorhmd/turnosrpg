@@ -1,7 +1,7 @@
 import React from 'react';
-import { Turn } from '../types/Turn';
+import { Turn } from '../../types/Turn';
 import { Person, SmartToy } from '@mui/icons-material/';
-import { Character } from '../types/Character';
+import { Character } from '../../types/Character';
 
 
 type Props = {
@@ -29,7 +29,7 @@ export default class TurnList extends React.Component<Props, State> {
 
     createList() {
         this.list = [...this.state.turn.playerList ?? [], ...this.state.turn.npcList ?? []];
-        this.list.sort((a, b) => +b.initiative - +a.initiative);
+        this.list.sort((a, b) => +b.initiative - +a?.initiative);
     }
 
     render() {

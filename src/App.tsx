@@ -23,7 +23,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {<Box sx={{ p: 3 }}>
+      {<Box sx={{ p: 3, overflowY: 'auto', height: '70vh'}}>
         {children}
       </Box>
       }
@@ -52,24 +52,24 @@ export default function App() {
   };
 
   return (
-    <div>
-      <Container sx={{ display: { xs: 'none', lg: 'flex' } }}>
-        <Box sx={{ width: '50vw', height: '80vh', border: 1, borderColor: 'divider', m: 3, mt: 8 }}>
+    <Container sx={{ display: { xs: 'none', lg: 'flex' } }}>
+        <Box sx={{ width: '50vw !important', height:'80vh', border: 1, borderColor: 'divider', m: 3, mt: 8}}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={valueTabPLayerList} onChange={handleChangeTabPlayerList} aria-label="basic tabs example">
               <Tab icon={<Person />} iconPosition="start" label="Jogadores" {...a11yProps(0)} />
               <Tab icon={<SmartToy />} iconPosition="start" label="NPCs" {...a11yProps(1)} />
             </Tabs>
           </Box>
+
           <TabPanel value={valueTabPLayerList} index={0}>
-            <CharList render={1}></CharList>
+            <CharList inner render={1}></CharList>
           </TabPanel>
           <TabPanel value={valueTabPLayerList} index={1}>
             <CharList render={2}></CharList>
           </TabPanel>
         </Box>
 
-        <Box sx={{ width: '50vw', height: '80vh', border: 1, borderColor: 'divider', m: 3, mt: 8 }}>
+        <Box sx={{ width: '50vw', minHeight: '80vh', border: 1, borderColor: 'divider', m: 3, mt: 8 }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={valueTabNpcList} onChange={handleChangeTabNpcList} aria-label="basic tabs example">
               <Tab icon={<List />} iconPosition="start" label="Lista" {...a11yProps(0)} />
@@ -83,9 +83,7 @@ export default function App() {
 
           </TabPanel>
         </Box>
-      </Container>
-    </div>
-
+      </Container>  
   );
 }
 

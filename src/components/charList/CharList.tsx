@@ -52,46 +52,43 @@ export default function CharList(props: any) {
     }, [props]);
 
     return (
-        <div>
-            <Container sx={{ display: 'fluid', overflowY: 'auto', height: '350px' }}>
+        <Container>
 
-                {/* Lista de personagens */}
-                {listCharacter.map((char, index) => (
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                        <Box sx={{ p: 2 }}>
-                            {props.render === 1 ? <Person /> : <SmartToy />}
-                        </Box>
-                        <Box sx={{ p: 2, minWidth: '175px' }}>
-                            <Typography>{char.name}</Typography>
-                        </Box>
-                        <Box sx={{ p: 2 }}>
-                            <TextField id="tfInit" variant="outlined" inputProps={{ maxLength: 2 }}
-                                sx={{ width: '65px', textAlign: 'center' }} onChange={e => handle_TfInit(e.target.value, index)} />
-                        </Box>
-                        <Box sx={{ p: 2 }}>
-                            <Button variant="outlined" color="error" sx={{ height: '55px' }}
-                                onClick={() => click_DelBtn(char.id)}>
-                                < Delete />
-                            </Button>
-                        </Box>
-                    </Box>
-                ))}
-
-
-                {/* Input de personagem */}
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {/* Lista de personagens */}
+            {listCharacter.map((char, index) => (
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
                     <Box sx={{ p: 2 }}>
-                        <TextField id="tfCharacter" label="Nome" variant="standard" value={charName}
-                            sx={{ width: '150px', textAlign: 'center' }} onChange={e => handle_TfName(e.target.value)} />
+                        {props.render === 1 ? <Person /> : <SmartToy />}
+                    </Box>
+                    <Box sx={{ p: 2, minWidth: '175px' }}>
+                        <Typography>{char.name}</Typography>
                     </Box>
                     <Box sx={{ p: 2 }}>
-                        <Button variant="contained" sx={{ height: '55px' }} onClick={click_AddBtn}>
-                            <Add />
+                        <TextField id="tfInit" variant="outlined" inputProps={{ maxLength: 2 }}
+                            sx={{ width: '65px', textAlign: 'center' }} onChange={e => handle_TfInit(e.target.value, index)} />
+                    </Box>
+                    <Box sx={{ p: 2 }}>
+                        <Button variant="outlined" color="error" sx={{ height: '55px' }}
+                            onClick={() => click_DelBtn(char.id)}>
+                            < Delete />
                         </Button>
                     </Box>
                 </Box>
-            </Container>
-        </div>
+            ))}
 
+
+            {/* Input de personagem */}
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ p: 2 }}>
+                    <TextField id="tfCharacter" label="Nome" variant="standard" value={charName}
+                        sx={{ width: '150px', textAlign: 'center' }} onChange={e => handle_TfName(e.target.value)} />
+                </Box>
+                <Box sx={{ p: 2 }}>
+                    <Button variant="contained" sx={{ height: '55px' }} onClick={click_AddBtn}>
+                        <Add />
+                    </Button>
+                </Box>
+            </Box>
+        </Container>
     )
 }

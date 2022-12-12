@@ -6,7 +6,7 @@ import { Character } from '../../types/Character';
 
 
 export default function CharList(props: any) {
-    const [listCharacter, setListCharacter] = useState<Character[]>([...[]]);
+    const [listCharacter, setListCharacter] = useState<Character[]>([]);
     const [charName, setCharName,] = useState<string>('');
     const [charType, setCharType,] = useState<string>('');
 
@@ -30,15 +30,14 @@ export default function CharList(props: any) {
             id: listCharacter.length + 1,
             flag: charType
         })
-
-        // saveData();
         setCharName('');
-
+        return listCharacter;
     }
 
     function click_DelBtn(id: number) {
-        setListCharacter(listCharacter.filter(char => char.id !== id))
-        // saveData();
+        let list = listCharacter.filter(char => char.id !== id);
+        setListCharacter(list);
+        return list;
     }
     //#endregion
 
@@ -53,10 +52,9 @@ export default function CharList(props: any) {
 
     return (
         <Container>
-
             {/* Lista de personagens */}
             {listCharacter.map((char, index) => (
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }} key={index}>
                     <Box sx={{ p: 2 }}>
                         {props.render === 1 ? <Person /> : <SmartToy />}
                     </Box>
@@ -69,13 +67,12 @@ export default function CharList(props: any) {
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Button variant="outlined" color="error" sx={{ height: '55px' }}
-                            onClick={() => click_DelBtn(char.id)}>
+                            onClick={() => {props.updateCharList(click_DelBtn(char.id))}}>
                             < Delete />
                         </Button>
                     </Box>
                 </Box>
             ))}
-
 
             {/* Input de personagem */}
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -84,7 +81,7 @@ export default function CharList(props: any) {
                         sx={{ width: '150px', textAlign: 'center' }} onChange={e => handle_TfName(e.target.value)} />
                 </Box>
                 <Box sx={{ p: 2 }}>
-                    <Button variant="contained" sx={{ height: '55px' }} onClick={click_AddBtn}>
+                    <Button variant="contained" sx={{ height: '55px' }} onClick={() => {props.updateCharList(click_AddBtn())}}>
                         <Add />
                     </Button>
                 </Box>

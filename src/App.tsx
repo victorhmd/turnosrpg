@@ -88,6 +88,7 @@ export default function App() {
 
   return (
     <Container>
+      {/* DESKTOP */}
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
         {/* Panel - Lista de Personagens */}
         <Box sx={{ width: '50vw !important', height: '80vh', border: 1, borderColor: 'divider', m: 3, mt: 8 }}>
@@ -150,7 +151,8 @@ export default function App() {
           </TabPanel>
         </Box>
       </Box>
-
+      
+      {/* MOBILE */}
       <Box sx={{ display: { xs: 'flex', md: 'none', justifyContent: 'center' } }}>
         <Box
           sx={{ bgcolor: 'background.paper', display: 'flex', height: '85vh', mt: 3 }}

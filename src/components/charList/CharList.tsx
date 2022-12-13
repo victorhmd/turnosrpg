@@ -61,7 +61,7 @@ export default function CharList(props: any) {
             <Box sx={{ display: 'inline' }}>
                 {/* Lista de personagens */}
                 {listCharacter.map((char, index) => (
-                    <Grid container spacing={1} alignItems="center" mb={3} >
+                    <Grid container spacing={1} alignItems="center" mb={3} key={index}>
                         <Grid item xs={2}>
                             {props.render === 1 ? <Person /> : <SmartToy />}
                         </Grid>

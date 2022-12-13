@@ -114,7 +114,7 @@ export default function App() {
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={valueTabTurns} onChange={handleChangTabTurns} aria-label="basic tabs example">
               <Tab icon={<List />} iconPosition="start" label="Lista" {...a11yProps(0)} />
-              <Tab icon={<PlayArrow />} iconPosition="start" label="Combate" {...a11yProps(1)} />
+              <Tab icon={<PlayArrow />} disabled iconPosition="start" label="Combate" {...a11yProps(1)} />
             </Tabs>
           </Box>
           <TabPanel value={valueTabTurns} index={0}>
@@ -125,7 +125,7 @@ export default function App() {
                 </Button>
               </Grid>
               <Grid item xs={6} textAlign="center">
-                <Button variant="contained" color="success" endIcon={<PlayArrow />} onClick={click_ComecarBtn} fullWidth>
+                <Button variant="contained" color="success" disabled endIcon={<PlayArrow />} onClick={click_ComecarBtn} fullWidth>
                   Começar
                 </Button>
               </Grid>
@@ -169,7 +169,7 @@ export default function App() {
             <Tab icon={<Person />}{...a11yProps(0)} />
             <Tab icon={<SmartToy />}{...a11yProps(1)} />
             <Tab icon={<List />} {...a11yProps(2)} />
-            <Tab icon={<PlayArrow />}{...a11yProps(3)} />
+            <Tab icon={<PlayArrow />}{...a11yProps(3)} disabled/>
           </Tabs>
           <TabPanel value={valueTabMobile} index={0} >
             <Box sx={{ width: '60vw' }}>
@@ -200,7 +200,7 @@ export default function App() {
                   </Button>
                 </Grid>
                 <Grid item xs={6} textAlign="center">
-                  <Button variant="contained" color="success" endIcon={<PlayArrow />} onClick={click_ComecarBtn} fullWidth>
+                  <Button variant="contained" color="success" disabled endIcon={<PlayArrow />} onClick={click_ComecarBtn} fullWidth>
                     Começar
                   </Button>
                 </Grid>

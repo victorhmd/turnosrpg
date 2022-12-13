@@ -71,6 +71,7 @@ export default function App() {
   //#region Functions
   function click_AtualizarBtn() {
     setTurnList();
+    console.log(charTurnList);
   }
 
   function click_ComecarBtn() {
@@ -79,6 +80,7 @@ export default function App() {
 
   function setTurnList() {
     var list = [...listPlayer ?? [], ...listNpc ?? []];
+    console.log(list);
     list.sort((a, b) => +b.initiative - +a.initiative);
     setCharTurnList(list);
   }
@@ -151,7 +153,7 @@ export default function App() {
           </TabPanel>
         </Box>
       </Box>
-      
+
       {/* MOBILE */}
       <Box sx={{ display: { xs: 'flex', md: 'none', justifyContent: 'center' } }}>
         <Box
@@ -185,7 +187,7 @@ export default function App() {
                 <strong>Lista de NPCs</strong>
               </Typography>
               <Box>
-                <CharList inner render={2} updateCharList={(list: React.SetStateAction<Character[]>) => setListPlayer(list)} list={listNpc}></CharList>
+                <CharList inner render={2} updateCharList={(list: React.SetStateAction<Character[]>) => setListNpc(list)} list={listNpc}></CharList>
               </Box>
             </Box>
           </TabPanel>

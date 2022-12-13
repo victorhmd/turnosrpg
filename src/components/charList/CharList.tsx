@@ -49,7 +49,6 @@ export default function CharList(props: any) {
         };
 
         configure();
-        
     }, [props]);
 
     useEffect(() => {

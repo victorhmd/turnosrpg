@@ -29,7 +29,8 @@ export default function CharList(props: any) {
             name: charName,
             initiative: '',
             id: listCharacter.length + 1,
-            flag: charType
+            flag: charType,
+            roundPos: 0
         }]);
         setCharName('');
         return listCharacter;

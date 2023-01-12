@@ -3,4 +3,5 @@ export type Character = {
     initiative: string;
     id: number;
     flag: string;
+    roundPos: number;
 }

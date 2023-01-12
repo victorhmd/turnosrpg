@@ -277,7 +277,7 @@ export default function App() {
                 </Button>
               </Grid>
               <Grid item xs={4} textAlign="center">
-                <Button variant="contained" color="info" endIcon={<WatchLater />} fullWidth>
+                <Button variant="contained" color="info" endIcon={<WatchLater />} fullWidth disabled>
                   Atrasar
                 </Button>
               </Grid>
@@ -398,7 +398,7 @@ export default function App() {
                   </Button>
                 </Grid>
                 <Grid item xs={4} textAlign="center">
-                  <Button variant="contained" color="info" fullWidth>
+                  <Button variant="contained" color="info" fullWidth disabled>
                     <WatchLater />
                   </Button>
                 </Grid>

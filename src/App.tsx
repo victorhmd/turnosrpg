@@ -88,11 +88,10 @@ export default function App() {
     if (turnCount === charTurnList.length) {
       await setTurnCount(1);
       setRoundCount(roundCount + 1);
+      calcBattleTime();
     } else {
       await setTurnCount(turnCount + 1);
     }
-
-    calcBattleTime();
   }
 
   function setTurnList() {

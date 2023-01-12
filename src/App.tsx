@@ -136,19 +136,19 @@ export default function App() {
     setCharTurnList(list);
   }
 
-  function checkCharTurnList(): boolean{
+  function disableComecar(): boolean{
     if(charTurnList.length < 2)
-      return false;
+      return true;
 
     let list = charTurnList.filter(char => char.flag !== 'j');
       if (list.length < 1) {
-        return false;
+        return true;
       } else {
         list = charTurnList.filter(char => char.flag === 'j');
         if (list.length < 1) {
-          return false;
-        }else {
           return true;
+        }else {
+          return false;
         }
       }
   }
@@ -175,8 +175,13 @@ export default function App() {
 
   useEffect(() => {
     showMessage();
-    setDisableBtnComecar(checkCharTurnList());
-  }, [charTurnList])
+    setDisableBtnComecar(disableComecar());
+  }, [charTurnList]);
+
+  useEffect(() => {
+    showMessage();
+    setDisableBtnComecar(disableComecar());
+  }, [])
 
   //#endregion
 

@@ -176,18 +176,18 @@ export default function App() {
     const actualChar = charTurnList[turnCount - 1];
     var newInit = 0;
 
-    if(afterChar.roundPos + 1 != charTurnList.length){
+    if (afterChar.roundPos + 1 != charTurnList.length) {
       if (Math.floor(+afterChar.initiative / +charTurnList[afterChar.roundPos + 1].initiative) == 1) {
         const char = charTurnList[afterChar.roundPos];
-  
+
         //update init afterChar
         if (afterChar.flag === "j") {
           listPlayer.filter(c => c.name == char.name)[0].initiative
-          = (+listPlayer.filter(c => c.name == char.name)[0].initiative + 0.001).toString();
+            = (+listPlayer.filter(c => c.name == char.name)[0].initiative + 0.001).toString();
         } else {
           listNpc.filter(c => c.name == char.name)[0].initiative
-          = (+listNpc.filter(c => c.name == char.name)[0].initiative + 0.001).toString();
-        }       
+            = (+listNpc.filter(c => c.name == char.name)[0].initiative + 0.001).toString();
+        }
       }
     }
 
@@ -377,7 +377,7 @@ export default function App() {
                 </Grid>
                 <Grid item xs={6} textAlign="center">
                   <Button variant="contained" color="success" endIcon={<PlayArrow />} onClick={click_ComecarBtn} fullWidth disabled={disableBtnComecar}>
-                    Começar
+                    {roundCount > 0 ? "Recomeçar" : "Iniciar"}
                   </Button>
                 </Grid>
               </Grid>
@@ -438,9 +438,9 @@ export default function App() {
                 </Grid>
                 <Grid item xs={4} textAlign="center">
                   <DelayTurnComponent
-                  charList={charTurnList.filter(c => c?.roundPos > (turnCount - 1))}
-                  render={2}
-                  updateTurn={delayTurn}
+                    charList={charTurnList.filter(c => c?.roundPos > (turnCount - 1))}
+                    render={2}
+                    updateTurn={delayTurn}
                   />
                 </Grid>
                 <Grid item xs={4} textAlign="center">

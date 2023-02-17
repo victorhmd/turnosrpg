@@ -48,7 +48,6 @@ export default function CharList(props: any) {
         function configure() {
             setCharType(props.render === 1 ? 'j' : 'npc');
         };
-
         configure();
     }, [props]);
 

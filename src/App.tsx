@@ -2,11 +2,13 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { Person, SmartToy, List, PlayArrow, Refresh, Check, WatchLater, Dangerous } from '@mui/icons-material/';
+import { Person, SmartToy, List, PlayArrow, Refresh, Check, Dangerous } from '@mui/icons-material/';
 import { Button, Container, Grid, Typography } from '@mui/material';
 import CharList from './components/charList/CharList';
 import { useEffect, useState } from 'react';
 import { Character } from './types/Character';
+import DelayTurnComponent from './components/delayTurn/DelayTurnComponent';
+import ToastComponent from './components/shared/ToastComponent';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -135,35 +137,33 @@ export default function App() {
     setCharTurnList(list);
   }
 
-  function disableComecar(): boolean{
-    if(charTurnList.length < 2)
+  function disableComecar(): boolean {
+    if (charTurnList.length < 2)
       return true;
 
     let list = charTurnList.filter(char => char.flag !== 'j');
+    if (list.length < 1) {
+      return true;
+    } else {
+      list = charTurnList.filter(char => char.flag === 'j');
       if (list.length < 1) {
         return true;
       } else {
-        list = charTurnList.filter(char => char.flag === 'j');
-        if (list.length < 1) {
-          return true;
-        }else {
-          return false;
-        }
+        return false;
       }
+    }
   }
 
   function showMessage() {
     if (charTurnList.length > 0 && roundCount > 0) {
       let list = charTurnList.filter(char => char.flag !== 'j');
       if (list.length < 1) {
-        alert('VITÓRIA DOS JOGADORES!');
         setValueTabTurns(0);
         setValueTabMobile(2);
         setRoundCount(0);
       } else {
         list = charTurnList.filter(char => char.flag === 'j');
         if (list.length < 1) {
-          alert('PARTY WIPE');
           setValueTabTurns(0);
           setValueTabMobile(2);
           setRoundCount(0);
@@ -172,6 +172,35 @@ export default function App() {
     }
   }
 
+  function delayTurn(afterChar: Character) {
+    const actualChar = charTurnList[turnCount - 1];
+    var newInit = 0;
+
+    if(afterChar.roundPos + 1 != charTurnList.length){
+      if (Math.floor(+afterChar.initiative / +charTurnList[afterChar.roundPos + 1].initiative) == 1) {
+        const char = charTurnList[afterChar.roundPos];
+  
+        //update init afterChar
+        if (afterChar.flag === "j") {
+          listPlayer.filter(c => c.name == char.name)[0].initiative
+          = (+listPlayer.filter(c => c.name == char.name)[0].initiative + 0.001).toString();
+        } else {
+          listNpc.filter(c => c.name == char.name)[0].initiative
+          = (+listNpc.filter(c => c.name == char.name)[0].initiative + 0.001).toString();
+        }       
+      }
+    }
+
+    newInit = +afterChar.initiative - 0.0001;
+    //atualizar nova init pra quem atrasou o turno
+    if (actualChar.flag === "j") {
+      listPlayer.filter(c => c.name == actualChar.name)[0].initiative = newInit.toString();
+    } else {
+      listNpc.filter(c => c.name == actualChar.name)[0].initiative = newInit.toString();
+    }
+    click_AtualizarBtn();
+
+  }
   useEffect(() => {
     showMessage();
     setDisableBtnComecar(disableComecar());
@@ -212,9 +241,11 @@ export default function App() {
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={valueTabTurns} onChange={handleChangTabTurns} aria-label="basic tabs example">
               <Tab icon={<List />} iconPosition="start" label="Lista" {...a11yProps(0)} />
-              <Tab icon={<PlayArrow />} iconPosition="start" label="Combate" {...a11yProps(1)}  disabled={roundCount < 1}/>
+              <Tab icon={<PlayArrow />} iconPosition="start" label="Combate" {...a11yProps(1)} disabled={roundCount < 1} />
             </Tabs>
           </Box>
+
+          {/* Lista de turno */}
           <TabPanel value={valueTabTurns} index={0}>
             <Grid container spacing={1} alignItems="center" mb={3}>
               <Grid item xs={6} textAlign="end">
@@ -224,7 +255,7 @@ export default function App() {
               </Grid>
               <Grid item xs={6} textAlign="center">
                 <Button variant="contained" color="success" endIcon={<PlayArrow />} onClick={click_ComecarBtn} fullWidth disabled={disableBtnComecar}>
-                  Começar
+                  {roundCount > 0 ? "Recomeçar" : "Iniciar"}
                 </Button>
               </Grid>
             </Grid>
@@ -246,6 +277,8 @@ export default function App() {
               </Grid>
             ))}
           </TabPanel>
+
+          {/* Combate */}
           <TabPanel value={valueTabTurns} index={1}>
             <Grid container spacing={1} alignItems="center" mb={3} justifyContent="space-evenly">
               <Grid item xs={12} textAlign="start">
@@ -281,13 +314,15 @@ export default function App() {
                 </Button>
               </Grid>
               <Grid item xs={4} textAlign="center">
-                <Button variant="contained" color="info" endIcon={<WatchLater />} fullWidth disabled>
-                  Atrasar
-                </Button>
+                <DelayTurnComponent
+                  charList={charTurnList.filter(c => c?.roundPos > (turnCount - 1))}
+                  render={1}
+                  updateTurn={delayTurn}
+                />
               </Grid>
               <Grid item xs={4} textAlign="center">
                 <Button variant="contained" color="error" endIcon={<Dangerous />} onClick={click_MorteBtn} fullWidth>
-                  Morte
+                  Morreu
                 </Button>
               </Grid>
             </Grid>
@@ -310,7 +345,7 @@ export default function App() {
             <Tab icon={<Person />}{...a11yProps(0)} />
             <Tab icon={<SmartToy />}{...a11yProps(1)} />
             <Tab icon={<List />} {...a11yProps(2)} />
-            <Tab icon={<PlayArrow />}{...a11yProps(3)} disabled={roundCount < 1}/>
+            <Tab icon={<PlayArrow />}{...a11yProps(3)} disabled={roundCount < 1} />
           </Tabs>
           <TabPanel value={valueTabMobile} index={0} >
             <Box sx={{ width: '60vw' }}>
@@ -402,9 +437,11 @@ export default function App() {
                   </Button>
                 </Grid>
                 <Grid item xs={4} textAlign="center">
-                  <Button variant="contained" color="info" fullWidth disabled>
-                    <WatchLater />
-                  </Button>
+                  <DelayTurnComponent
+                  charList={charTurnList.filter(c => c?.roundPos > (turnCount - 1))}
+                  render={2}
+                  updateTurn={delayTurn}
+                  />
                 </Grid>
                 <Grid item xs={4} textAlign="center">
                   <Button variant="contained" color="error" onClick={click_MorteBtn} fullWidth>

@@ -272,7 +272,7 @@ export default function App() {
                   <Typography>{char.name}</Typography>
                 </Grid>
                 <Grid item xs={3} textAlign="center">
-                  <Typography><strong>INIT </strong>{char.initiative}</Typography>
+                  <Typography><strong>INIT </strong>{Math.round(+char.initiative)}</Typography>
                 </Grid>
               </Grid>
             ))}
@@ -394,7 +394,7 @@ export default function App() {
                     <Typography>{char.name}</Typography>
                   </Grid>
                   <Grid item xs={3} textAlign="center">
-                    <Typography><strong>INIT </strong>{char.initiative}</Typography>
+                    <Typography><strong>INIT </strong>{Math.round(+char.initiative)}</Typography>
                   </Grid>
                 </Grid>
               ))}

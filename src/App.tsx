@@ -130,11 +130,19 @@ export default function App() {
   }
 
   async function click_MorteBtn() {
+    const turnChar = charTurnList.filter(char => char.roundPos === (turnCount - 1))[0];
     let list = charTurnList.filter(char => char.roundPos !== (turnCount - 1));
     for (let index = 0; index < list.length; index++) {
       list[index].roundPos = index;
     };
+
+    if (turnChar.roundPos === charTurnList.length - 1) {
+      click_FinalizarTurnoBtn();
+    }
+    
     setCharTurnList(list);
+    
+    console.log('list', list);
   }
 
   function disableComecar(): boolean {

@@ -13,7 +13,7 @@ import { Person, SmartToy, WatchLater } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { Character } from '../../types/Character';
 import ToastComponent from '../shared/ToastComponent';
-import { GiPlayerNext } from "react-icons/gi";
+import { GiPlayerNext,  GiSwordman, GiDreadSkull } from "react-icons/gi";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
@@ -39,13 +39,13 @@ function SimpleDialog(props: SimpleDialogProps) {
     if (flag === "j") {
       return <ListItemAvatar>
         <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-          <Person />
+          <GiSwordman size={25} />
         </Avatar>
       </ListItemAvatar>
     } else {
       return <ListItemAvatar>
         <Avatar sx={{ bgcolor: red[100], color: red[600] }}>
-          <SmartToy />
+          <GiDreadSkull size={25} />
         </Avatar>
       </ListItemAvatar>
     }

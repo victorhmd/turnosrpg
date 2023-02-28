@@ -64,15 +64,15 @@ export default function CharList(props: any) {
                     <Grid container spacing={1} alignItems="center" mb={3} key={index}>
                         <Grid item xs={2}>
                             {props.render === 1 ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />}
-                        </Grid>
-                        <Grid item xs={4} lg={6}>
+                        </Grid>                       
+                        <Grid item xs={10} lg={6} sx={{textAlign: 'left'}}>
                             <Typography noWrap>{char.name}</Typography>
                         </Grid>
-                        <Grid item xs={3} lg={2}>
-                            <TextField id="tfInit" variant="outlined" inputProps={{ maxLength: 2, style: { textAlign: 'center' } }}
+                        <Grid item xs={8} lg={2}>
+                            <TextField id="tfInit" variant="outlined" label="INIT" inputProps={{ maxLength: 2, style: { textAlign: 'center' } }}
                                 sx={{ textAlign: 'center'}} onChange={e => props.updateCharList(handle_TfInit(e.target.value, index))} />
                         </Grid>
-                        <Grid item xs={3} lg={2}>
+                        <Grid item xs={4} lg={2}>
                             <Button variant="outlined" color="error" sx={{ height: '55px' }}
                                 onClick={() => { props.updateCharList(click_DelBtn(char.id)); }}>
                                 <Delete />
@@ -82,7 +82,7 @@ export default function CharList(props: any) {
                 ))}
 
                 {/* Input de personagem */}
-                <Grid container spacing={1} alignItems="center" mb={3} >
+                <Grid container spacing={1} alignItems="center" mb={3} mt={3} >
                     <Grid item xs={8} >
                         <TextField id="tfCharacter" label="Nome" variant="standard" value={charName}
                             sx={{ textAlign: 'center' }} onChange={e => handle_TfName(e.target.value)} />

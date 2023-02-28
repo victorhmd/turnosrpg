@@ -82,19 +82,77 @@ export default function App() {
   const handleChangTabMobile = (event: React.SyntheticEvent, newValue: number) => {
     setValueTabMobile(newValue);
   };
+  //#endregion
 
+  //#region Color Theme
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
   const theme = React.useMemo(
     () =>
       createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
+        components: {
+          MuiTabs: {
+            styleOverrides: {
+              indicator: {
+                backgroundColor: '#330e62',
+              }
+            }
+          },
+          MuiTab: {
+            styleOverrides: {
+              root: {
+                color: '#7c4dff',
+                "&.Mui-selected": {
+                  "color": "#fff",
+                backgroundColor: "#7c4dff",
+                }
+              }
+            }
+          },
         },
+        palette: {
+          primary: {
+            light: '#3378af',
+            main: '#01579b',
+            dark: '#003c6c',
+            contrastText: '#fff !important',
+          },
+          secondary: {
+            light: '#9670ff45',
+            main: '#7c4dff',
+            dark: '#5635b2',
+            contrastText: '#fff !important',
+          },
+          error: {
+            light: '#c54949',
+            main: '#b71c1c',
+            dark: '#801313',
+            contrastText: '#fff !important',
+          },
+          warning: {
+            light: '#f79845',
+            main: '#f57f17',
+            dark: '#ab5810',
+            contrastText: '#fff !important',
+          },
+          info: {
+            light: '#337066',
+            main: '#004d40',
+            dark: '#00352c',
+            contrastText: '#fff !important',
+          },
+          success: {
+            light: '#5b874b',
+            main: '#33691e',
+            dark: '#234915',
+            contrastText: '#fff !important',
+          },
+          mode: prefersDarkMode ? 'dark' : 'light',
+        }
       }),
     [prefersDarkMode],
   );
   //#endregion
+
 
   //#region Functions
   function click_AtualizarBtn() {
@@ -203,17 +261,17 @@ export default function App() {
     const actualChar = charTurnList[turnCount - 1];
     var newInit = 0;
 
-    if (afterChar.roundPos + 1 != charTurnList.length) {
-      if (Math.floor(+afterChar.initiative / +charTurnList[afterChar.roundPos + 1].initiative) == 1) {
+    if (afterChar.roundPos + 1 !== charTurnList.length) {
+      if (Math.floor(+afterChar.initiative / +charTurnList[afterChar.roundPos + 1].initiative) === 1) {
         const char = charTurnList[afterChar.roundPos];
 
         //update init afterChar
         if (afterChar.flag === "j") {
-          listPlayer.filter(c => c.name == char.name)[0].initiative
-            = (+listPlayer.filter(c => c.name == char.name)[0].initiative + 0.001).toString();
+          listPlayer.filter(c => c.name === char.name)[0].initiative
+            = (+listPlayer.filter(c => c.name === char.name)[0].initiative + 0.001).toString();
         } else {
-          listNpc.filter(c => c.name == char.name)[0].initiative
-            = (+listNpc.filter(c => c.name == char.name)[0].initiative + 0.001).toString();
+          listNpc.filter(c => c.name === char.name)[0].initiative
+            = (+listNpc.filter(c => c.name === char.name)[0].initiative + 0.001).toString();
         }
       }
     }
@@ -221,9 +279,9 @@ export default function App() {
     newInit = +afterChar.initiative - 0.0001;
     //atualizar nova init pra quem atrasou o turno
     if (actualChar.flag === "j") {
-      listPlayer.filter(c => c.name == actualChar.name)[0].initiative = newInit.toString();
+      listPlayer.filter(c => c.name === actualChar.name)[0].initiative = newInit.toString();
     } else {
-      listNpc.filter(c => c.name == actualChar.name)[0].initiative = newInit.toString();
+      listNpc.filter(c => c.name === actualChar.name)[0].initiative = newInit.toString();
     }
     click_AtualizarBtn();
 
@@ -350,7 +408,7 @@ export default function App() {
                   />
                 </Grid>
                 <Grid item xs={4} textAlign="center">
-                  <Button variant="contained" color="error" size="large" endIcon={<GiChoppedSkull size={25} />} onClick={click_MorteBtn} fullWidth>
+                  <Button variant="contained" sx={{backgroundColor: 'error.dark'}} size="large" endIcon={<GiChoppedSkull size={25} />} onClick={click_MorteBtn} fullWidth>
                     Morreu
                   </Button>
                 </Grid>
@@ -400,7 +458,7 @@ export default function App() {
               <Box sx={{ width: '60vw' }}>
                 <Grid container spacing={1} alignItems="center" mb={3}>
                   <Grid item xs={4} textAlign="end">
-                    <Button variant="contained" color="primary" size="large" onClick={click_AtualizarBtn} fullWidth>
+                    <Button variant="contained" color="secondary" size="large" onClick={click_AtualizarBtn} fullWidth>
                       <GiArchiveResearch size={25} />
                     </Button>
                   </Grid>
@@ -473,7 +531,7 @@ export default function App() {
                     />
                   </Grid>
                   <Grid item xs={4} textAlign="center">
-                    <Button variant="contained" color="error" size="large" onClick={click_MorteBtn} fullWidth>
+                    <Button variant="contained" sx={{backgroundColor: 'error.dark'}} size="large" onClick={click_MorteBtn} fullWidth>
                       <GiChoppedSkull size={25} />
                     </Button>
                   </Grid>

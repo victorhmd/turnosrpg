@@ -64,16 +64,16 @@ export default function CharList(props: any) {
                     <Grid container spacing={1} alignItems="center" mb={3} key={index}>
                         <Grid item xs={2}>
                             {props.render === 1 ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />}
-                        </Grid>                       
-                        <Grid item xs={10} lg={6} sx={{textAlign: 'left'}}>
+                        </Grid>
+                        <Grid item xs={10} lg={6} sx={{ textAlign: 'left' }}>
                             <Typography noWrap>{char.name}</Typography>
                         </Grid>
                         <Grid item xs={8} lg={2}>
                             <TextField id="tfInit" variant="outlined" label="INIT" inputProps={{ maxLength: 2, style: { textAlign: 'center' } }}
-                                sx={{ textAlign: 'center'}} onChange={e => props.updateCharList(handle_TfInit(e.target.value, index))} />
+                                sx={{ textAlign: 'center' }} onChange={e => props.updateCharList(handle_TfInit(e.target.value, index))} />
                         </Grid>
                         <Grid item xs={4} lg={2}>
-                            <Button variant="outlined" color="error" sx={{ height: '55px' }}
+                            <Button color="error" variant="contained" sx={{ height: '55px' }}
                                 onClick={() => { props.updateCharList(click_DelBtn(char.id)); }}>
                                 <Delete />
                             </Button>
@@ -88,7 +88,8 @@ export default function CharList(props: any) {
                             sx={{ textAlign: 'center' }} onChange={e => handle_TfName(e.target.value)} />
                     </Grid>
                     <Grid item xs={4}>
-                        <Button variant="contained" sx={{ height: '55px' }} onClick={() => { props.updateCharList(click_AddBtn()) }}>
+                        <Button variant="contained" sx={{ height: '55px' }} onClick={() => { props.updateCharList(click_AddBtn()) }}
+                            color="info">
                             <Add />
                         </Button>
                     </Grid>

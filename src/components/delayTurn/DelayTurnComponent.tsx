@@ -9,7 +9,6 @@ import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import { blue, red } from '@mui/material/colors';
-import { Person, SmartToy, WatchLater } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { Character } from '../../types/Character';
 import ToastComponent from '../shared/ToastComponent';
@@ -38,13 +37,13 @@ function SimpleDialog(props: SimpleDialogProps) {
   function renderAvatar(flag: string) {
     if (flag === "j") {
       return <ListItemAvatar>
-        <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+        <Avatar sx={{ bgcolor: 'info.dark', color: '#fff' }}>
           <GiSwordman size={25} />
         </Avatar>
       </ListItemAvatar>
     } else {
       return <ListItemAvatar>
-        <Avatar sx={{ bgcolor: red[100], color: red[600] }}>
+        <Avatar sx={{ bgcolor: 'secondary.dark', color: '#fff' }}>
           <GiDreadSkull size={25} />
         </Avatar>
       </ListItemAvatar>
@@ -55,8 +54,8 @@ function SimpleDialog(props: SimpleDialogProps) {
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Irá jogar depois de quem?</DialogTitle>
       <List sx={{ pt: 0 }}>
-        {props.charList.map((char) => (
-          <ListItem disableGutters>
+        {props.charList.map((char, index) => (
+          <ListItem disableGutters key={index}>
             <ListItemButton onClick={() => handleListItemClick(char)} key={char.roundPos}>
               {renderAvatar(char.flag)}
               <ListItemText primary={char.name} />

@@ -3,6 +3,7 @@ import { Button, Grid, TextField, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { Character } from '../../types/Character';
+import { GiSwordman, GiDreadSkull } from "react-icons/gi";
 
 
 export default function CharList(props: any) {
@@ -62,7 +63,7 @@ export default function CharList(props: any) {
                 {listCharacter.map((char, index) => (
                     <Grid container spacing={1} alignItems="center" mb={3} key={index}>
                         <Grid item xs={2}>
-                            {props.render === 1 ? <Person /> : <SmartToy />}
+                            {props.render === 1 ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />}
                         </Grid>
                         <Grid item xs={4} lg={6}>
                             <Typography noWrap>{char.name}</Typography>

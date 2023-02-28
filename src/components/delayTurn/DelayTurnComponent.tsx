@@ -8,15 +8,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import PersonIcon from '@mui/icons-material/Person';
-import AddIcon from '@mui/icons-material/Add';
-import Typography from '@mui/material/Typography';
 import { blue, red } from '@mui/material/colors';
 import { Person, SmartToy, WatchLater } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { Character } from '../../types/Character';
-import CharList from '../charList/CharList';
 import ToastComponent from '../shared/ToastComponent';
+import { GiPlayerNext } from "react-icons/gi";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
@@ -104,11 +101,11 @@ export default function SimpleDialogDemo(props: any) {
 
   function renderBtn() {
     if (props.render === 2) {
-      return <Button variant="contained" color="info" fullWidth onClick={handleClickOpen}>
-        <WatchLater />
+      return <Button variant="contained" size="large" color="info" fullWidth onClick={handleClickOpen}>
+        <GiPlayerNext size={25} />
       </Button>
     } else {
-      return <Button variant="contained" color="info" endIcon={<WatchLater />} fullWidth onClick={handleClickOpen}>
+      return <Button variant="contained"  size="large" color="info" endIcon={<GiPlayerNext size={25} />} fullWidth onClick={handleClickOpen}>
         Atrasar
       </Button>
     }

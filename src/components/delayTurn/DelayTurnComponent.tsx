@@ -37,7 +37,7 @@ function SimpleDialog(props: SimpleDialogProps) {
   function renderAvatar(flag: string) {
     if (flag === "j") {
       return <ListItemAvatar>
-        <Avatar sx={{ bgcolor: 'info.dark', color: '#fff' }}>
+        <Avatar sx={{ bgcolor: 'primary.dark', color: '#fff' }}>
           <GiSwordman size={25} />
         </Avatar>
       </ListItemAvatar>

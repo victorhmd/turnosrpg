@@ -117,7 +117,7 @@ export default function App() {
             contrastText: '#fff !important',
           },
           secondary: {
-            light: '#9670ff45',
+            light: '#9670ff',
             main: '#7c4dff',
             dark: '#5635b2',
             contrastText: '#fff !important',
@@ -408,7 +408,7 @@ export default function App() {
                   />
                 </Grid>
                 <Grid item xs={4} textAlign="center">
-                  <Button variant="contained" color="error" sx={{backgroundColor: 'error.dark'}} size="large" endIcon={<GiChoppedSkull size={25} />} onClick={click_MorteBtn} fullWidth>
+                  <Button variant="contained" color="error" size="large" endIcon={<GiChoppedSkull size={25} />} onClick={click_MorteBtn} fullWidth>
                     Morreu
                   </Button>
                 </Grid>
@@ -531,7 +531,7 @@ export default function App() {
                     />
                   </Grid>
                   <Grid item xs={4} textAlign="center">
-                    <Button variant="contained" color="error" sx={{backgroundColor: 'error.dark'}} size="large" onClick={click_MorteBtn} fullWidth>
+                    <Button variant="contained" color="error" size="large" onClick={click_MorteBtn} fullWidth>
                       <GiChoppedSkull size={25} />
                     </Button>
                   </Grid>

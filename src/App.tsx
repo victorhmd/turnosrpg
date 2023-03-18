@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import { Check } from '@mui/icons-material/';
 import { Button, Container, Grid, Typography } from '@mui/material';
 import CharList from './components/charList/CharList';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Character } from './types/Character';
 import DelayTurnComponent from './components/delayTurn/DelayTurnComponent';
 import {
@@ -16,6 +16,7 @@ import {
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Stopwatch from './components/stopwatch/Stopwatch';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -103,7 +104,7 @@ export default function App() {
                 color: '#7c4dff',
                 "&.Mui-selected": {
                   "color": "#fff",
-                backgroundColor: "#7c4dff",
+                  backgroundColor: "#7c4dff",
                 }
               }
             }
@@ -155,6 +156,7 @@ export default function App() {
 
 
   //#region Functions
+
   function click_AtualizarBtn() {
     setTurnList();
   }
@@ -223,29 +225,16 @@ export default function App() {
   }
 
   function disableComecar(): boolean {
-    if (charTurnList.length < 2)
-      return true;
-
-    let list = charTurnList.filter(char => char.flag !== 'j');
-    if (list.length < 1) {
-      return true;
-    } else {
-      list = charTurnList.filter(char => char.flag === 'j');
-      if (list.length < 1) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    return charTurnList.length < 1 ? true : false;
   }
 
   function showMessage() {
     if (charTurnList.length > 0 && roundCount > 0) {
       let list = charTurnList.filter(char => char.flag !== 'j');
       if (list.length < 1) {
-        setValueTabTurns(0);
-        setValueTabMobile(2);
-        setRoundCount(0);
+        // setValueTabTurns(0);
+        // setValueTabMobile(2);
+        // setRoundCount(0);
       } else {
         list = charTurnList.filter(char => char.flag === 'j');
         if (list.length < 1) {
@@ -254,6 +243,10 @@ export default function App() {
           setRoundCount(0);
         }
       }
+    } else {
+      setValueTabTurns(0);
+      setValueTabMobile(2);
+      setRoundCount(0);
     }
   }
 
@@ -291,10 +284,10 @@ export default function App() {
     setDisableBtnComecar(disableComecar());
   }, [charTurnList]);
 
-  useEffect(() => {
-    showMessage();
-    setDisableBtnComecar(disableComecar());
-  }, [])
+  // useEffect(() => {
+  //   showMessage();
+  //   setDisableBtnComecar(disableComecar());
+  // }, [])
 
   //#endregion
 
@@ -378,13 +371,16 @@ export default function App() {
                     {('00' + minBattleCount).slice(-2) + ':' + ('00' + secBattleCount).slice(-2)}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} textAlign="center"
+                <Grid item xs={12} textAlign="start">
+                  <Stopwatch/ >
+                </Grid>
+                <Grid item xs={12} textAlign="center" className='border'
                   sx={{ border: 1, borderColor: 'divider', mb: 6, p: 3 }}>
                   <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>Turno Atual</Typography>
                   <Typography> {charTurnList[(turnCount - 1)]?.flag === 'j' ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />}
                     {' ' + charTurnList[(turnCount - 1)]?.name}</Typography>
                 </Grid>
-                <Grid item xs={12} textAlign="center" className='border'
+                <Grid item xs={12} textAlign="center"
                   sx={{ border: 1, borderColor: 'divider', mb: 6, p: 3 }}>
                   <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>Próximo Turno</Typography>
                   <Typography>
@@ -434,6 +430,8 @@ export default function App() {
               <Tab icon={<GiRuleBook size={25} />} {...a11yProps(2)} />
               <Tab icon={<GiSwordsEmblem size={25} />}{...a11yProps(3)} disabled={roundCount < 1} />
             </Tabs>
+
+            {/* LISTA DE TURNO */}
             <TabPanel value={valueTabMobile} index={0} >
               <Box sx={{ width: '60vw', textAlign: 'center' }}>
                 <Typography>
@@ -458,7 +456,7 @@ export default function App() {
               <Box sx={{ width: '60vw' }}>
                 <Grid container spacing={1} alignItems="center" mb={3}>
                   <Grid item xs={4} textAlign="end">
-                    <Button variant="contained" color="secondary" size="large" onClick={click_AtualizarBtn} fullWidth>
+                    <Button variant="contained" color="primary" size="large" onClick={click_AtualizarBtn} fullWidth>
                       <GiArchiveResearch size={25} />
                     </Button>
                   </Grid>
@@ -487,6 +485,8 @@ export default function App() {
                 ))}
               </Box>
             </TabPanel>
+
+            {/* COMBATE */}
             <TabPanel value={valueTabMobile} index={3}>
               <Box sx={{ width: '60vw' }}>
                 <Grid container spacing={1} alignItems="center" mb={3} justifyContent="space-evenly">
@@ -501,13 +501,16 @@ export default function App() {
                       <strong>Tempo de combate:</strong> {('00' + minBattleCount).slice(-2) + ':' + ('00' + secBattleCount).slice(-2)}
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} textAlign="center"
+                  <Grid item xs={12} textAlign="start">
+                    <Stopwatch />
+                  </Grid>
+                  <Grid item xs={12} textAlign="center" className='border'
                     sx={{ border: 1, borderColor: 'divider', mb: 5, p: 3 }}>
                     <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>Turno Atual</Typography>
                     <Typography>{charTurnList[(turnCount - 1)]?.flag === 'j' ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />}
                       {' ' + charTurnList[(turnCount - 1)]?.name}</Typography>
                   </Grid>
-                  <Grid item xs={12} textAlign="center" className='border'
+                  <Grid item xs={12} textAlign="center"
                     sx={{ border: 1, borderColor: 'divider', mb: 3, p: 3 }}>
                     <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>Próximo Turno</Typography>
                     <Typography>

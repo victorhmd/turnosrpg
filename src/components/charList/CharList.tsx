@@ -1,4 +1,4 @@
-import { Add, Delete, Person, SmartToy } from '@mui/icons-material';
+import { Add, Delete } from '@mui/icons-material';
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import { useEffect, useState } from 'react';

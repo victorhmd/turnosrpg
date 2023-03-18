@@ -8,17 +8,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import { blue, red } from '@mui/material/colors';
 import { useEffect } from 'react';
 import { Character } from '../../types/Character';
 import ToastComponent from '../shared/ToastComponent';
 import { GiPlayerNext,  GiSwordman, GiDreadSkull } from "react-icons/gi";
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 export interface SimpleDialogProps {
   open: boolean;
-  // selectedValue: Character;
   onClose: (value: any) => void;
   charList: Character[]
 }

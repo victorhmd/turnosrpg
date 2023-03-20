@@ -5,4 +5,4 @@ Este aplicativo foi criado para facilitar o gerenciamento de turnos para jogos d
 Para acessá-lo clique no link abaixo
 https://turnosrpg.vercel.app
 
-# Aplicativo criado apenas para estudo e aprendizado sem fins lucrativos!
+# Aplicativo criado apenas para estudo e aprendizado, SEM FINS LUCRATIVOS!

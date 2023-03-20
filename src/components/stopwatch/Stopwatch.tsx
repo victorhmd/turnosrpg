@@ -1,12 +1,13 @@
-import { useState, useEffect, useImperativeHandle, forwardRef } from "react";
+import { useState, useEffect } from "react";
 import { Button, Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import { Pause, PlayArrow, RestartAlt } from "@mui/icons-material";
 
-const Stopwatch = (ref: any) => {
+const Stopwatch = (props: any) => {
     const [time, setTime] = useState(0);
     const [running, setRunning] = useState(false);
-    
+
+
 
     useEffect(() => {
         let interval: any;
@@ -28,6 +29,20 @@ const Stopwatch = (ref: any) => {
         setTime(0);
     };
 
+    function resetAndStart() {
+        if (running) {
+            setRunning(false);
+            setTime(0);
+            setRunning(true);
+        }
+
+    }
+
+    useEffect(() => {
+        resetAndStart();
+    }, [props.trigger])
+
+
     return (
         <Container sx={{ paddingLeft: "0px !important" }}>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -36,12 +51,12 @@ const Stopwatch = (ref: any) => {
                         <Typography variant="h5">{("0" + Math.floor((time / 60000) % 60)).slice(-2)}: {("0" + Math.floor((time / 1000) % 60)).slice(-2)}: {("0" + ((time / 10) % 100)).slice(-2)}</Typography>
                     </Grid>
                     <Grid item xs={6} textAlign="end">
-                        <Button onClick={() => setRunning(!running)} variant="contained" color={!running ? "success" : "info"}>
+                        <Button onClick={() => startOrPause()} variant="contained" color={!running ? "success" : "info"} name="btnStarStop">
                             {running ? <Pause /> : <PlayArrow />}
                         </Button>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button onClick={() => setTime(0)} disabled={running} variant="contained" color="warning" sx={{ marginLeft: '10px' }}>
+                        <Button onClick={() => reset()} disabled={running} variant="contained" color="warning" sx={{ marginLeft: '10px' }} name="btnReset">
                             <RestartAlt />
                         </Button>
                     </Grid>

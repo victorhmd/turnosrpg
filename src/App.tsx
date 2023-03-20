@@ -69,6 +69,8 @@ export default function App() {
   const [secBattleCount, setSecBattleCount] = useState(0);
 
   const [disableBtnComecar, setDisableBtnComecar] = useState(true);
+
+  const [triggerStopwatch, setTriggerStopwatch] = useState(0);
   //#endregion
 
   //#region Variables
@@ -83,6 +85,7 @@ export default function App() {
   const handleChangTabMobile = (event: React.SyntheticEvent, newValue: number) => {
     setValueTabMobile(newValue);
   };
+  
   //#endregion
 
   //#region Color Theme
@@ -173,6 +176,8 @@ export default function App() {
     } else {
       await setTurnCount(turnCount + 1);
     }
+
+    setTriggerStopwatch((triggerStopwatch) => triggerStopwatch + 1);
   }
 
   function setTurnList() {
@@ -372,7 +377,7 @@ export default function App() {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} textAlign="start">
-                  <Stopwatch/ >
+                  <Stopwatch trigger={triggerStopwatch}/>
                 </Grid>
                 <Grid item xs={12} textAlign="center" className='border'
                   sx={{ border: 1, borderColor: 'divider', mb: 6, p: 3 }}>
@@ -502,7 +507,7 @@ export default function App() {
                     </Typography>
                   </Grid>
                   <Grid item xs={12} textAlign="start">
-                    <Stopwatch />
+                    <Stopwatch trigger={triggerStopwatch}/>
                   </Grid>
                   <Grid item xs={12} textAlign="center" className='border'
                     sx={{ border: 1, borderColor: 'divider', mb: 5, p: 3 }}>

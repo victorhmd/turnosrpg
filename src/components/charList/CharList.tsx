@@ -44,6 +44,11 @@ export default function CharList(props: any) {
     }
     //#endregion
 
+    function keyPress(event: any){
+        if(event.key === 'Enter'){
+            props.updateCharList(click_AddBtn())
+        }
+    }
 
     useEffect(() => {
         function configure() {
@@ -69,7 +74,7 @@ export default function CharList(props: any) {
                             <Typography noWrap>{char.name}</Typography>
                         </Grid>
                         <Grid item xs={8} lg={2}>
-                            <TextField id="tfInit" variant="outlined" label="INIT" inputProps={{ maxLength: 2, style: { textAlign: 'center' } }}
+                            <TextField id="tfInit" variant="outlined" label="INIT" inputProps={{ maxLength: 2, style: { textAlign: 'center' }, tabIndex: 1 }}
                                 sx={{ textAlign: 'center' }} onChange={e => props.updateCharList(handle_TfInit(e.target.value, index))} />
                         </Grid>
                         <Grid item xs={4} lg={2}>
@@ -85,10 +90,10 @@ export default function CharList(props: any) {
                 <Grid container spacing={1} alignItems="center" mb={3} mt={3} >
                     <Grid item xs={8} >
                         <TextField id="tfCharacter" label="Nome" variant="standard" value={charName}
-                            sx={{ textAlign: 'center' }} onChange={e => handle_TfName(e.target.value)} />
+                            sx={{ textAlign: 'center' }} onChange={e => handle_TfName(e.target.value)} onKeyUp={(event) => keyPress(event)}/>
                     </Grid>
                     <Grid item xs={4}>
-                        <Button variant="contained" sx={{ height: '55px' }} onClick={() => { props.updateCharList(click_AddBtn()) }}
+                        <Button type="submit" variant="contained" sx={{ height: '55px' }} onClick={() => { props.updateCharList(click_AddBtn()) }} 
                             color="info">
                             <Add />
                         </Button>

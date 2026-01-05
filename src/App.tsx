@@ -302,124 +302,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container>
-        {/* DESKTOP */}
-        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          {/* Panel - Lista de GiSwordmanagens */}
-          <Box sx={{ width: '50vw !important', height: '80vh', border: 1, borderColor: 'divider', m: 3, mt: 8 }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={valueTabCharacters} onChange={handleChangeTabCharacters} aria-label="basic tabs example">
-                <Tab icon={<GiSwordsPower size={25} />} iconPosition="start" label="Jogadores" {...a11yProps(0)} />
-                <Tab icon={<GiDoubleDragon size={25} />} iconPosition="start" label="NPCs" {...a11yProps(1)} />
-              </Tabs>
-            </Box>
-
-            <TabPanel value={valueTabCharacters} index={0}>
-              <CharList inner render={1} updateCharList={(list: React.SetStateAction<Character[]>) => setListPlayer(list)} list={listPlayer}></CharList>
-            </TabPanel>
-            <TabPanel value={valueTabCharacters} index={1}>
-              <CharList render={2} updateCharList={(list: React.SetStateAction<Character[]>) => setListNpc(list)} list={listNpc}></CharList>
-            </TabPanel>
-          </Box>
-
-          {/* Panel - Gerenciamento de turno */}
-          <Box sx={{ width: '50vw', minHeight: '80vh', border: 1, borderColor: 'divider', m: 3, mt: 8 }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={valueTabTurns} onChange={handleChangTabTurns} aria-label="basic tabs example">
-                <Tab icon={<GiRuleBook size={25} />} iconPosition="start" label="Lista" {...a11yProps(0)} />
-                <Tab icon={<GiSwordsEmblem size={25} />} iconPosition="start" label="Combate" {...a11yProps(1)} disabled={roundCount < 1} />
-              </Tabs>
-            </Box>
-
-            {/* Lista de turno */}
-            <TabPanel value={valueTabTurns} index={0}>
-              <Grid container spacing={1} alignItems="center" mb={3}>
-                <Grid item xs={6} textAlign="end">
-                  <Button variant="contained" color="primary" endIcon={<GiArchiveResearch size={25} />} onClick={click_AtualizarBtn} fullWidth>
-                    Atualizar
-                  </Button>
-                </Grid>
-                <Grid item xs={6} textAlign="center">
-                  <Button variant="contained" color="success" endIcon={<GiSwordClash size={25} />} onClick={click_ComecarBtn} fullWidth disabled={disableBtnComecar}>
-                    {roundCount > 0 ? "Recomeçar" : "Iniciar"}
-                  </Button>
-                </Grid>
-              </Grid>
-
-              {charTurnList.map((char, index) => (
-                <Grid container spacing={1} alignItems="center" mb={3} key={index} justifyContent="space-evenly">
-                  <Grid item xs={1} textAlign="end">
-                    <Typography>{char.roundPos + 1}</Typography>
-                  </Grid>
-                  <Grid item xs={1} textAlign="center">
-                    {char.flag === 'j' ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />}
-                  </Grid>
-                  <Grid item xs={5}>
-                    <Typography>{char.name}</Typography>
-                  </Grid>
-                  <Grid item xs={3} textAlign="center">
-                    <Typography><strong>INIT </strong>{Math.round(+char.initiative)}</Typography>
-                  </Grid>
-                </Grid>
-              ))}
-            </TabPanel>
-
-            {/* Combate */}
-            <TabPanel value={valueTabTurns} index={1}>
-              <Grid container spacing={1} alignItems="center" mb={3} justifyContent="space-evenly">
-                <Grid item xs={12} textAlign="start">
-                  <Typography><strong>Rodada: </strong>{roundCount}</Typography>
-                </Grid>
-                <Grid item xs={12} textAlign="start"
-                  sx={{ mb: 3 }}>
-                  <Typography>
-                    <strong>Tempo de combate: </strong>
-                    {('00' + minBattleCount).slice(-2) + ':' + ('00' + secBattleCount).slice(-2)}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} textAlign="start">
-                  <Stopwatch trigger={triggerStopwatch}/>
-                </Grid>
-                <Grid item xs={12} textAlign="center" className='border'
-                  sx={{ border: 1, borderColor: 'divider', mb: 6, p: 3 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>Turno Atual</Typography>
-                  <Typography> {charTurnList[(turnCount - 1)]?.flag === 'j' ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />}
-                    {' ' + charTurnList[(turnCount - 1)]?.name}</Typography>
-                </Grid>
-                <Grid item xs={12} textAlign="center"
-                  sx={{ border: 1, borderColor: 'divider', mb: 6, p: 3 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>Próximo Turno</Typography>
-                  <Typography>
-                    {turnCount === charTurnList.length ?
-                      (charTurnList[(0)]?.flag === 'j' ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />) :
-                      (charTurnList[(turnCount)]?.flag === 'j' ? <GiSwordman size={25} /> : <GiDreadSkull size={25} />)}
-
-                    {turnCount === charTurnList.length ?
-                      ' ' + charTurnList[0]?.name : ' ' + charTurnList[turnCount]?.name}</Typography>
-                </Grid>
-                <Grid item xs={4} textAlign="center">
-                  <Button variant="contained" color="success" size="large" endIcon={<Check />} onClick={click_FinalizarTurnoBtn} fullWidth>
-                    Finalizar
-                  </Button>
-                </Grid>
-                <Grid item xs={4} textAlign="center">
-                  <DelayTurnComponent
-                    charList={charTurnList.filter(c => c?.roundPos > (turnCount - 1))}
-                    render={1}
-                    updateTurn={delayTurn}
-                  />
-                </Grid>
-                <Grid item xs={4} textAlign="center">
-                  <Button variant="contained" color="error" size="large" endIcon={<GiChoppedSkull size={25} />} onClick={click_MorteBtn} fullWidth>
-                    Morreu
-                  </Button>
-                </Grid>
-              </Grid>
-            </TabPanel>
-          </Box>
-        </Box>
-
-        {/* MOBILE */}
-        <Box sx={{ display: { xs: 'flex', md: 'none', justifyContent: 'center' } }}>
+        <Box sx={{ display: { xs: 'flex', justifyContent: 'center' } }}>
           <Box
             sx={{ bgcolor: 'background.paper', display: 'flex', height: '85vh', mt: 3 }}
           >
@@ -430,10 +313,10 @@ export default function App() {
               onChange={handleChangTabMobile}
               sx={{ borderRight: 1, borderColor: 'divider' }}
             >
-              <Tab icon={<GiSwordsPower size={25} />}{...a11yProps(0)} />
-              <Tab icon={<GiDoubleDragon size={25} />}{...a11yProps(1)} />
-              <Tab icon={<GiRuleBook size={25} />} {...a11yProps(2)} />
-              <Tab icon={<GiSwordsEmblem size={25} />}{...a11yProps(3)} disabled={roundCount < 1} />
+              <Tab icon={<GiSwordsPower size={25} />}{...a11yProps(0)} label='Jogadores' />
+              <Tab icon={<GiDoubleDragon size={25} />}{...a11yProps(1)} label='NPCs'/>
+              <Tab icon={<GiRuleBook size={25} />} {...a11yProps(2)} label='Lista de turno'/>
+              <Tab icon={<GiSwordsEmblem size={25} />}{...a11yProps(3)} disabled={roundCount < 1} label='combate'/>
             </Tabs>
 
             {/* LISTA DE TURNO */}
